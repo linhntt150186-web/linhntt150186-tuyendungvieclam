@@ -1,0 +1,232 @@
+﻿@model List<JobHubMVC.Models.Job>
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="min-h-screen bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Tìm việc làm mơ ước của bạn
+                </h1>
+                <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                    Khám phá hàng nghìn cơ hội việc làm từ các công ty hàng đầu tại Việt Nam. 
+                    Bắt đầu hành trình sự nghiệp của bạn ngay hôm nay.
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <form asp-controller="Jobs" asp-action="Index" method="get" class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <input type="text" name="keyword" placeholder="Tìm kiếm việc làm..." 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <input type="text" name="location" placeholder="Địa điểm" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <select name="category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Tất cả ngành nghề</option>
+                                <option value="Công nghệ thông tin">Công nghệ thông tin</option>
+                                <option value="Kinh doanh - Bán hàng">Kinh doanh - Bán hàng</option>
+                                <option value="Dịch vụ - Nhà hàng">Dịch vụ - Nhà hàng</option>
+                                <option value="Tài chính - Kế toán">Tài chính - Kế toán</option>
+                                <option value="Marketing - PR">Marketing - PR</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                                <i class="fas fa-search mr-2"></i>Tìm kiếm
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="flex justify-center mb-4">
+                        <div class="bg-blue-100 p-4 rounded-full">
+                            <i class="fas fa-search text-2xl text-blue-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-2">10,000+</h3>
+                    <p class="text-gray-600">Việc làm đang tuyển</p>
+                </div>
+                <div class="text-center">
+                    <div class="flex justify-center mb-4">
+                        <div class="bg-green-100 p-4 rounded-full">
+                            <i class="fas fa-building text-2xl text-green-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-2">5,000+</h3>
+                    <p class="text-gray-600">Công ty đối tác</p>
+                </div>
+                <div class="text-center">
+                    <div class="flex justify-center mb-4">
+                        <div class="bg-orange-100 p-4 rounded-full">
+                            <i class="fas fa-users text-2xl text-orange-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-2">500,000+</h3>
+                    <p class="text-gray-600">Ứng viên tin tưởng</p>
+                </div>
+                <div class="text-center">
+                    <div class="flex justify-center mb-4">
+                        <div class="bg-purple-100 p-4 rounded-full">
+                            <i class="fas fa-check-circle text-2xl text-purple-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-2">98%</h3>
+                    <p class="text-gray-600">Tỷ lệ hài lòng</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Jobs -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Việc làm nổi bật</h2>
+                    <p class="text-gray-600">Những cơ hội việc làm tốt nhất từ các công ty uy tín</p>
+                </div>
+                <a asp-controller="Jobs" asp-action="Index" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                    Xem tất cả →
+                </a>
+            </div>
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach (var job in Model)
+                    {
+                        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200">
+                            <div class="flex items-start space-x-4">
+                                <img src="@job.ImageUrl" alt="@job.Company logo" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" />
+                                <div class="flex-1">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <a asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+                                                @job.Title
+                                            </a>
+                                            <div class="flex items-center text-gray-600 mt-1">
+                                                <i class="fas fa-building text-sm mr-1"></i>
+                                                <span class="text-sm">@job.Company</span>
+                                            </div>
+                                        </div>
+                                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                            @job.Category
+                                        </span>
+                                    </div>
+
+                                    <div class="flex items-center space-x-4 mt-3 text-sm text-gray-600">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-map-marker-alt text-sm mr-1"></i>
+                                            <span>@job.Location</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-dollar-sign text-sm mr-1"></i>
+                                            <span>@job.Salary</span>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-gray-700 mt-3 text-sm line-clamp-2">
+                                        @(job.Description.Length > 100 ? job.Description.Substring(0, 100) + "..." : job.Description)
+                                    </p>
+
+                                    <div class="flex items-center justify-between mt-4">
+                                        <a asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="text-blue-600 hover:text-blue-700 font-medium text-sm">
+                                            Xem chi tiết →
+                                        </a>
+                                        <a asp-controller="Application" asp-action="Apply" asp-route-jobId="@job.Id" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors inline-block text-center">
+                                            Ứng tuyển ngay
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-12">
+                    <p class="text-gray-600">Chưa có việc làm nào được đăng.</p>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Cách thức hoạt động</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Quy trình tìm việc đơn giản và hiệu quả chỉ với vài bước
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                        1
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Tạo hồ sơ</h3>
+                    <p class="text-gray-600">
+                        Đăng ký tài khoản và tạo hồ sơ ấn tượng với thông tin cá nhân và kinh nghiệm làm việc
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-green-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                        2
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Tìm kiếm việc làm</h3>
+                    <p class="text-gray-600">
+                        Sử dụng bộ lọc thông minh để tìm kiếm những công việc phù hợp với kỹ năng và kinh nghiệm
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-orange-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                        3
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Ứng tuyển ngay</h3>
+                    <p class="text-gray-600">
+                        Gửi đơn ứng tuyển một cách nhanh chóng và theo dõi trạng thái qua dashboard cá nhân
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Sẵn sàng bắt đầu tương lai của bạn?
+            </h2>
+            <p class="text-xl text-blue-100 mb-8">
+                Tham gia cùng hàng trăm nghìn ứng viên đã tìm được việc làm mơ ước qua JobHub
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a asp-controller="Account" asp-action="Register" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    Đăng ký miễn phí
+                </a>
+                <a asp-controller="Jobs" asp-action="Index" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                    Khám phá việc làm
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

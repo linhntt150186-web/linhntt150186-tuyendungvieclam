@@ -1,0 +1,140 @@
+@model List<JobHubMVC.Models.Job>
+@{
+    ViewData["Title"] = "Tìm kiếm việc làm";
+}
+
+<div class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">Tìm kiếm việc làm</h1>
+            
+            <!-- Search Form -->
+            <form method="get" class="bg-white rounded-lg shadow-md p-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <input type="text" name="keyword" value="@ViewBag.Keyword" placeholder="Từ khóa..." 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <input type="text" name="location" value="@ViewBag.Location" placeholder="Địa điểm" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <select name="category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Tất cả ngành nghề</option>
+                            <option value="Công nghệ thông tin" selected="@(ViewBag.Category == "Công nghệ thông tin")">Công nghệ thông tin</option>
+                            <option value="Kinh doanh - Bán hàng" selected="@(ViewBag.Category == "Kinh doanh - Bán hàng")">Kinh doanh - Bán hàng</option>
+                            <option value="Dịch vụ - Nhà hàng" selected="@(ViewBag.Category == "Dịch vụ - Nhà hàng")">Dịch vụ - Nhà hàng</option>
+                            <option value="Tài chính - Kế toán" selected="@(ViewBag.Category == "Tài chính - Kế toán")">Tài chính - Kế toán</option>
+                            <option value="Marketing - PR" selected="@(ViewBag.Category == "Marketing - PR")">Marketing - PR</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            <i class="fas fa-search mr-2"></i>Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <div class="flex-1">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-900">
+                            @Model.Count việc làm được tìm thấy
+                        </h2>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-sort text-gray-400"></i>
+                            <form method="get" class="inline">
+                                <input type="hidden" name="keyword" value="@ViewBag.Keyword" />
+                                <input type="hidden" name="location" value="@ViewBag.Location" />
+                                <input type="hidden" name="category" value="@ViewBag.Category" />
+                                <select name="sortBy" onchange="this.form.submit()" 
+                                        class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="CreatedAt" selected="@(ViewBag.SortBy == "CreatedAt")">Mới nhất</option>
+                                    <option value="Title" selected="@(ViewBag.SortBy == "Title")">Tên công việc</option>
+                                    <option value="Company" selected="@(ViewBag.SortBy == "Company")">Tên công ty</option>
+                                    <option value="Location" selected="@(ViewBag.SortBy == "Location")">Địa điểm</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.Any())
+                {
+                    <div class="space-y-6">
+                        @foreach (var job in Model)
+                        {
+                            <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200">
+                                <div class="flex items-start space-x-4">
+                                    <img src="@job.ImageUrl" alt="@job.Company logo" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" />
+                                    <div class="flex-1">
+                                        <div class="flex items-start justify-between">
+                                            <div>
+                                                <a asp-action="Details" asp-route-id="@job.Id" class="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+                                                    @job.Title
+                                                </a>
+                                                <div class="flex items-center text-gray-600 mt-1">
+                                                    <i class="fas fa-building text-sm mr-1"></i>
+                                                    <span class="text-sm">@job.Company</span>
+                                                </div>
+                                            </div>
+                                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                                @job.Category
+                                            </span>
+                                        </div>
+
+                                        <div class="flex items-center space-x-4 mt-3 text-sm text-gray-600">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-map-marker-alt text-sm mr-1"></i>
+                                                <span>@job.Location</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-dollar-sign text-sm mr-1"></i>
+                                                <span>@job.Salary</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-clock text-sm mr-1"></i>
+                                                <span>@job.CreatedAt.ToString("dd/MM/yyyy")</span>
+                                            </div>
+                                        </div>
+
+                                        <p class="text-gray-700 mt-3 text-sm line-clamp-2">
+                                            @(job.Description.Length > 150 ? job.Description.Substring(0, 150) + "..." : job.Description)
+                                        </p>
+
+                                        <div class="flex items-center justify-between mt-4">
+                                            <a asp-action="Details" asp-route-id="@job.Id" class="text-blue-600 hover:text-blue-700 font-medium text-sm">
+                                                Xem chi tiết →
+                                            </a>
+                                            <a asp-controller="Application" asp-action="Apply" asp-route-jobId="@job.Id" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors inline-block text-center">
+                                                Ứng tuyển ngay
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-12">
+                        <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">
+                            Không tìm thấy việc làm phù hợp
+                        </h3>
+                        <p class="text-gray-600">
+                            Thử thay đổi từ khóa tìm kiếm hoặc bộ lọc để tìm thêm kết quả
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,137 @@
+@model JobHubMVC.Controllers.LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="flex justify-center">
+            <i class="fas fa-briefcase text-4xl text-blue-600"></i>
+        </div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Đăng nhập vào tài khoản
+        </h2>
+        <p class="mt-2 text-center text-sm text-gray-600">
+            Hoặc
+            <a asp-action="Register" class="font-medium text-blue-600 hover:text-blue-500">
+                tạo tài khoản mới
+            </a>
+        </p>
+    </div>
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <!-- Demo Accounts Note -->
+            <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h3 class="text-sm font-semibold text-blue-800 mb-2">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    Tài khoản demo để test hệ thống:
+                </h3>
+                <div class="space-y-2 text-xs text-blue-700">
+                    <div class="bg-white p-2 rounded border">
+                        <strong>👑 Admin:</strong><br>
+                        Email: <code class="bg-gray-100 px-1 rounded">admin@jobhub.vn</code><br>
+                        Password: <code class="bg-gray-100 px-1 rounded">Admin123!</code>
+                    </div>
+                    <div class="bg-white p-2 rounded border">
+                        <strong>🏢 Nhà tuyển dụng:</strong><br>
+                        Email: <code class="bg-gray-100 px-1 rounded">employer@jobhub.vn</code><br>
+                        Password: <code class="bg-gray-100 px-1 rounded">Employer123!</code>
+                    </div>
+                    <div class="text-center mt-2">
+                        <small class="text-blue-600">💡 Click vào email để copy nhanh</small>
+                    </div>
+                </div>
+            </div>
+            
+            <form asp-action="Login" method="post" class="space-y-6">
+                <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+                
+                <div>
+                    <label asp-for="Email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <div class="mt-1">
+                        <input asp-for="Email" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        <span asp-validation-for="Email" class="text-red-600 text-sm"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="Password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+                    <div class="mt-1">
+                        <input asp-for="Password" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        <span asp-validation-for="Password" class="text-red-600 text-sm"></span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input asp-for="RememberMe" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                        <label asp-for="RememberMe" class="ml-2 block text-sm text-gray-900">Ghi nhớ đăng nhập</label>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Đăng nhập
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Quick fill demo accounts
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click handlers for demo account codes
+    const codes = document.querySelectorAll('code');
+    codes.forEach(code => {
+        code.style.cursor = 'pointer';
+        code.title = 'Click để copy';
+        
+        code.addEventListener('click', function() {
+            const text = this.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                // Visual feedback
+                const original = this.textContent;
+                this.textContent = '✓ Đã copy!';
+                this.classList.add('bg-green-100');
+                
+                setTimeout(() => {
+                    this.textContent = original;
+                    this.classList.remove('bg-green-100');
+                }, 1000);
+            });
+        });
+    });
+    
+    // Quick fill buttons
+    const adminBtn = document.createElement('button');
+    adminBtn.type = 'button';
+    adminBtn.className = 'text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition-colors';
+    adminBtn.textContent = 'Tự động điền';
+    adminBtn.onclick = function() {
+        document.querySelector('input[name="Email"]').value = 'admin@jobhub.vn';
+        document.querySelector('input[name="Password"]').value = 'Admin123!';
+    };
+    
+    const employerBtn = document.createElement('button');
+    employerBtn.type = 'button';
+    employerBtn.className = 'text-xs bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 transition-colors';
+    employerBtn.textContent = 'Tự động điền';
+    employerBtn.onclick = function() {
+        document.querySelector('input[name="Email"]').value = 'employer@jobhub.vn';
+        document.querySelector('input[name="Password"]').value = 'Employer123!';
+    };
+    
+    // Add buttons to demo accounts
+    const demoBoxes = document.querySelectorAll('.bg-white.p-2.rounded.border');
+    if (demoBoxes.length >= 2) {
+        demoBoxes[0].appendChild(document.createElement('br'));
+        demoBoxes[0].appendChild(adminBtn);
+        
+        demoBoxes[1].appendChild(document.createElement('br'));
+        demoBoxes[1].appendChild(employerBtn);
+    }
+});
+</script>

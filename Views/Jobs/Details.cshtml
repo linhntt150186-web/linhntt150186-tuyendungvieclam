@@ -1,0 +1,263 @@
+@model JobHubMVC.Models.Job
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb -->
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a asp-controller="Home" asp-action="Index" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-home mr-2"></i>Trang chủ
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                        <a asp-controller="Jobs" asp-action="Index" class="text-sm font-medium text-gray-700 hover:text-blue-600">Việc làm</a>
+                    </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                        <span class="text-sm font-medium text-gray-500">@Model.Title</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <!-- Job Header -->
+                    <div class="flex items-start space-x-6 mb-8">
+                        <img src="@Model.ImageUrl" alt="@Model.Company logo" class="w-20 h-20 rounded-lg object-cover flex-shrink-0" />
+                        <div class="flex-1">
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">@Model.Title</h1>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i class="fas fa-building text-lg mr-2"></i>
+                                <span class="text-lg font-medium">@Model.Company</span>
+                            </div>
+                            <div class="flex flex-wrap gap-4 text-sm text-gray-600">
+                                <div class="flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>
+                                    <span>@Model.Location</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-dollar-sign mr-2"></i>
+                                    <span>@Model.Salary</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-tag mr-2"></i>
+                                    <span>@Model.Category</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span>Đăng @Model.CreatedAt.ToString("dd/MM/yyyy")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Description -->
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Mô tả công việc</h2>
+                        <div class="prose max-w-none text-gray-700">
+                            @Html.Raw(Model.Description.Replace("\n", "<br>"))
+                        </div>
+                    </div>
+
+                    <!-- Job Requirements -->
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Yêu cầu công việc</h2>
+                        <div class="prose max-w-none text-gray-700">
+                            @Html.Raw(Model.Requirements.Replace("\n", "<br>"))
+                        </div>
+                    </div>
+
+                    <!-- Apply Button -->
+                    <div class="border-t pt-8">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a asp-controller="Application" asp-action="Apply" asp-route-jobId="@Model.Id" class="flex-1 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg inline-block text-center">
+                                <i class="fas fa-paper-plane mr-2"></i>Ứng tuyển ngay
+                            </a>
+                            <button class="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-blue-600 hover:text-blue-600 transition-colors font-semibold">
+                                <i class="fas fa-heart mr-2"></i>Lưu việc làm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Company Info -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Thông tin công ty</h3>
+                    <div class="flex items-center space-x-4 mb-4">
+                        <img src="@Model.ImageUrl" alt="@Model.Company logo" class="w-16 h-16 rounded-lg object-cover" />
+                        <div>
+                            <h4 class="font-semibold text-gray-900">@Model.Company</h4>
+                            <p class="text-sm text-gray-600">@Model.Category</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-map-marker-alt w-5 mr-2"></i>
+                            <span>@Model.Location</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-users w-5 mr-2"></i>
+                            <span>100-500 nhân viên</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-globe w-5 mr-2"></i>
+                            <span>www.company.com</span>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                        Xem thêm về công ty
+                    </button>
+                </div>
+
+                <!-- Job Stats -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Thống kê</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Lượt xem:</span>
+                            <span class="font-semibold">1,234</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Ứng viên:</span>
+                            <span class="font-semibold">45</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Hạn nộp:</span>
+                            <span class="font-semibold text-red-600">@Model.CreatedAt.AddDays(30).ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Similar Jobs -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Việc làm tương tự</h3>
+                    <div class="space-y-4">
+                        <div class="border-b pb-4 last:border-b-0 last:pb-0">
+                            <h4 class="font-semibold text-gray-900 hover:text-blue-600 cursor-pointer">
+                                Senior Developer
+                            </h4>
+                            <p class="text-sm text-gray-600">Tech Company ABC</p>
+                            <p class="text-sm text-blue-600 font-medium">20-30 triệu VNĐ</p>
+                        </div>
+                        <div class="border-b pb-4 last:border-b-0 last:pb-0">
+                            <h4 class="font-semibold text-gray-900 hover:text-blue-600 cursor-pointer">
+                                Frontend Developer
+                            </h4>
+                            <p class="text-sm text-gray-600">Startup XYZ</p>
+                            <p class="text-sm text-blue-600 font-medium">15-25 triệu VNĐ</p>
+                        </div>
+                        <div class="border-b pb-4 last:border-b-0 last:pb-0">
+                            <h4 class="font-semibold text-gray-900 hover:text-blue-600 cursor-pointer">
+                                Backend Developer
+                            </h4>
+                            <p class="text-sm text-gray-600">Digital Agency</p>
+                            <p class="text-sm text-blue-600 font-medium">18-28 triệu VNĐ</p>
+                        </div>
+                    </div>
+                    <a asp-controller="Jobs" asp-action="Index" asp-route-category="@Model.Category" 
+                       class="block w-full text-center mt-4 text-blue-600 hover:text-blue-700 font-medium">
+                        Xem thêm →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="bg-white rounded-lg shadow-md p-8 mt-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Bình luận</h3>
+                
+                @if (User.Identity!.IsAuthenticated)
+                {
+                    <!-- Add Comment Form -->
+                    <form asp-controller="Comment" asp-action="Add" method="post" class="mb-8">
+                        <input type="hidden" name="jobId" value="@Model.Id" />
+                        <div class="flex space-x-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user text-blue-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <textarea name="content" rows="3" 
+                                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                          placeholder="Viết bình luận của bạn..."></textarea>
+                                <div class="mt-2">
+                                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                                        Gửi bình luận
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="mb-8 p-4 bg-gray-50 rounded-lg">
+                        <p class="text-gray-600">
+                            <a asp-controller="Account" asp-action="Login" class="text-blue-600 hover:text-blue-700">Đăng nhập</a> 
+                            để bình luận về công việc này.
+                        </p>
+                    </div>
+                }
+
+                <!-- Comments List -->
+                @{
+                    var comments = ViewBag.Comments as List<JobHubMVC.Models.Comment> ?? new List<JobHubMVC.Models.Comment>();
+                }
+                
+                @if (comments.Any())
+                {
+                    <div class="space-y-6">
+                        @foreach (var comment in comments)
+                        {
+                            <div class="flex space-x-4">
+                                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-user text-gray-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="bg-gray-50 rounded-lg p-4">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <h4 class="font-semibold text-gray-900">@comment.User.FullName</h4>
+                                            <div class="flex items-center space-x-2">
+                                                <span class="text-sm text-gray-500">@comment.CreatedAt.ToString("dd/MM/yyyy HH:mm")</span>
+                                                @if (User.Identity!.IsAuthenticated && (comment.UserId == ViewBag.CurrentUserId || ViewBag.IsAdmin == true))
+                                                {
+                                                    <form asp-controller="Comment" asp-action="Delete" method="post" class="inline"
+                                                          onsubmit="return confirm('Bạn có chắc muốn xóa bình luận này?')">
+                                                        <input type="hidden" name="id" value="@comment.Id" />
+                                                        <button type="submit" class="text-red-600 hover:text-red-700 text-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                }
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-700">@comment.Content</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-8">
+                        <i class="fas fa-comments text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-600">Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

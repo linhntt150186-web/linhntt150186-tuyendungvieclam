@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - JobHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a asp-controller="Home" asp-action="Index" class="flex items-center space-x-2">
+                        <i class="fas fa-briefcase text-2xl text-blue-600"></i>
+                        <span class="text-xl font-bold text-gray-900">JobHub</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a asp-controller="Jobs" asp-action="Index" class="text-gray-700 hover:text-blue-600 font-medium">Việc làm</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Công ty</a>
+                    @if (User.Identity!.IsAuthenticated && User.IsInRole("Employer"))
+                    {
+                        <a asp-controller="Employer" asp-action="PostJob" class="text-gray-700 hover:text-blue-600 font-medium">Đăng tuyển</a>
+                    }
+                </nav>
+
+                <!-- System Clock & User Menu -->
+                <div class="flex items-center space-x-4">
+                    <!-- System Clock - Desktop -->
+                    <div class="hidden md:flex items-center space-x-3 system-clock px-4 py-2 rounded-lg">
+                        <i class="fas fa-clock text-blue-600 clock-icon"></i>
+                        <div>
+                            <div id="current-date" class="clock-date"></div>
+                            <div id="current-time" class="clock-time"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- System Clock - Mobile -->
+                    <div class="md:hidden system-clock-mobile" title="Thời gian hiện tại">
+                        <i class="fas fa-clock text-blue-600 text-sm clock-icon"></i>
+                    </div>
+                    
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-briefcase text-2xl text-blue-400"></i>
+                        <span class="text-xl font-bold">JobHub</span>
+                    </div>
+                    <p class="text-gray-300">Nền tảng tuyển dụng hàng đầu Việt Nam, kết nối nhà tuyển dụng và ứng viên.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Dành cho ứng viên</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white">Tìm việc làm</a></li>
+                        <li><a href="#" class="hover:text-white">Tạo CV</a></li>
+                        <li><a href="#" class="hover:text-white">Hướng dẫn phỏng vấn</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Dành cho nhà tuyển dụng</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white">Đăng tin tuyển dụng</a></li>
+                        <li><a href="#" class="hover:text-white">Tìm ứng viên</a></li>
+                        <li><a href="#" class="hover:text-white">Quản lý tuyển dụng</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liên hệ</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><i class="fas fa-phone mr-2"></i> 1900 1234</li>
+                        <li><i class="fas fa-envelope mr-2"></i> info@jobhub.vn</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> Hà Nội, Việt Nam</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; 2025 JobHub. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <!-- System Clock Script -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // Format date (dd/mm/yyyy)
+            const date = now.toLocaleDateString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            
+            // Format time (hh:mm:ss)
+            const time = now.toLocaleTimeString('vi-VN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            
+            // Format day of week
+            const dayOfWeek = now.toLocaleDateString('vi-VN', {
+                weekday: 'long'
+            });
+            
+            // Update desktop clock
+            const dateElement = document.getElementById('current-date');
+            const timeElement = document.getElementById('current-time');
+            
+            if (dateElement) dateElement.textContent = date;
+            if (timeElement) timeElement.textContent = time;
+            
+            // Update mobile clock tooltip
+            const mobileClockElement = document.querySelector('.system-clock-mobile');
+            if (mobileClockElement) {
+                mobileClockElement.title = `${dayOfWeek}, ${date} - ${time}`;
+            }
+        }
+        
+        // Initialize clock when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            updateClock();
+            setInterval(updateClock, 1000);
+        });
+        
+        // Fallback for immediate execution
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                updateClock();
+                setInterval(updateClock, 1000);
+            });
+        } else {
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+    </script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

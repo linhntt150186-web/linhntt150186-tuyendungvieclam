@@ -1,0 +1,194 @@
+@model JobHubMVC.Controllers.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
+            <p class="text-gray-600">Quản lý hệ thống tuyển dụng</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-briefcase text-2xl text-blue-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Tổng việc làm</p>
+                        <p class="text-2xl font-semibold text-gray-900">@Model.TotalJobs</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-2xl text-green-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Việc làm đang hoạt động</p>
+                        <p class="text-2xl font-semibold text-gray-900">@Model.ActiveJobs</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-users text-2xl text-purple-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Tổng người dùng</p>
+                        <p class="text-2xl font-semibold text-gray-900">@Model.TotalUsers</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-file-alt text-2xl text-orange-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Tổng đơn ứng tuyển</p>
+                        <p class="text-2xl font-semibold text-gray-900">@Model.TotalApplications</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <a asp-action="Jobs" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center">
+                    <i class="fas fa-briefcase text-3xl text-blue-600 mr-4"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Quản lý tin tuyển dụng</h3>
+                        <p class="text-gray-600">Duyệt và quản lý tin tuyển dụng</p>
+                    </div>
+                </div>
+            </a>
+
+            <a asp-action="Employers" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center">
+                    <i class="fas fa-building text-3xl text-green-600 mr-4"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Quản lý nhà tuyển dụng</h3>
+                        <p class="text-gray-600">Xem và quản lý nhà tuyển dụng</p>
+                    </div>
+                </div>
+            </a>
+
+            <a asp-action="JobSeekers" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center">
+                    <i class="fas fa-user-tie text-3xl text-purple-600 mr-4"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Quản lý ứng viên</h3>
+                        <p class="text-gray-600">Xem và quản lý ứng viên</p>
+                    </div>
+                </div>
+            </a>
+
+            <a asp-action="Applications" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center">
+                    <i class="fas fa-file-alt text-3xl text-orange-600 mr-4"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Quản lý đơn ứng tuyển</h3>
+                        <p class="text-gray-600">Xem tất cả đơn ứng tuyển</p>
+                    </div>
+                </div>
+            </a>
+
+            <a asp-action="Users" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center">
+                    <i class="fas fa-users text-3xl text-indigo-600 mr-4"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Quản lý người dùng</h3>
+                        <p class="text-gray-600">Xem tất cả tài khoản</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center">
+                    <i class="fas fa-chart-bar text-3xl text-red-600 mr-4"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Báo cáo thống kê</h3>
+                        <p class="text-gray-600">Xem thống kê và báo cáo</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Recent Jobs -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Việc làm mới nhất</h3>
+                </div>
+                <div class="p-6">
+                    @if (Model.RecentJobs.Any())
+                    {
+                        <div class="space-y-4">
+                            @foreach (var job in Model.RecentJobs)
+                            {
+                                <div class="flex items-center space-x-4">
+                                    <img src="@job.ImageUrl" alt="@job.Company" class="w-10 h-10 rounded-lg object-cover">
+                                    <div class="flex-1">
+                                        <p class="font-medium text-gray-900">@job.Title</p>
+                                        <p class="text-sm text-gray-600">@job.Company</p>
+                                    </div>
+                                    <span class="@(job.Status == JobStatus.Active ? "bg-green-100 text-green-800" : job.Status == JobStatus.Pending ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800") px-2 py-1 rounded-full text-xs">
+                                        @(job.Status == JobStatus.Active ? "Hoạt động" : job.Status == JobStatus.Pending ? "Chờ duyệt" : "Không hoạt động")
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-gray-500">Chưa có việc làm nào.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Recent Applications -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Đơn ứng tuyển mới nhất</h3>
+                </div>
+                <div class="p-6">
+                    @if (Model.RecentApplications.Any())
+                    {
+                        <div class="space-y-4">
+                            @foreach (var app in Model.RecentApplications)
+                            {
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user text-blue-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-gray-900">@app.Applicant.FullName</p>
+                                        <p class="text-sm text-gray-600">@app.Job.Title</p>
+                                    </div>
+                                    <span class="@(app.Status == ApplicationStatus.Pending ? "bg-yellow-100 text-yellow-800" : app.Status == ApplicationStatus.Accepted ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800") px-2 py-1 rounded-full text-xs">
+                                        @(app.Status == ApplicationStatus.Pending ? "Chờ xử lý" : app.Status == ApplicationStatus.Accepted ? "Chấp nhận" : "Từ chối")
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-gray-500">Chưa có đơn ứng tuyển nào.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

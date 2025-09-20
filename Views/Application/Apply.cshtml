@@ -1,0 +1,71 @@
+@model JobHubMVC.Controllers.ApplyViewModel
+@{
+    ViewData["Title"] = "Ứng tuyển - " + Model.JobTitle;
+}
+
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-lg shadow-md p-8">
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Ứng tuyển công việc</h1>
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-info-circle text-blue-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-blue-700">
+                                <strong>Vị trí:</strong> @Model.JobTitle<br>
+                                <strong>Công ty:</strong> @Model.Company
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form asp-action="Apply" method="post" class="space-y-6">
+                <input type="hidden" asp-for="JobId" />
+                <input type="hidden" asp-for="JobTitle" />
+                <input type="hidden" asp-for="Company" />
+                
+                <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+
+                <div>
+                    <label asp-for="CoverLetter" class="block text-sm font-medium text-gray-700 mb-2">
+                        Thư giới thiệu <span class="text-red-500">*</span>
+                    </label>
+                    <textarea asp-for="CoverLetter" rows="8" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              placeholder="Hãy giới thiệu về bản thân, kinh nghiệm và lý do bạn phù hợp với vị trí này..."></textarea>
+                    <span asp-validation-for="CoverLetter" class="text-red-600 text-sm"></span>
+                </div>
+
+                <div>
+                    <label asp-for="CvUrl" class="block text-sm font-medium text-gray-700 mb-2">
+                        Link CV (Google Drive, Dropbox, v.v.)
+                    </label>
+                    <input asp-for="CvUrl" type="url" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           placeholder="https://drive.google.com/file/d/...">
+                    <span asp-validation-for="CvUrl" class="text-red-600 text-sm"></span>
+                    <p class="mt-1 text-sm text-gray-500">
+                        Tùy chọn: Bạn có thể đính kèm link CV để tăng cơ hội được tuyển dụng
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between pt-6 border-t">
+                    <a asp-controller="Jobs" asp-action="Details" asp-route-id="@Model.JobId" 
+                       class="text-gray-600 hover:text-gray-800 font-medium">
+                        ← Quay lại
+                    </a>
+                    <div class="space-x-4">
+                        <button type="submit" 
+                                class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                            <i class="fas fa-paper-plane mr-2"></i>Gửi đơn ứng tuyển
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
