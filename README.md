@@ -41,12 +41,7 @@
 # Nhấn Ctrl+C trong terminal đang chạy
 ```
 
-### 2. Build và chạy lại
-```bash
-cd "D:\New folder\ASP.NET\28092025- doanphuocmien\tuyển dụng việc làm\2\tuyendung\JobHubMVC"
-dotnet build
-dotnet run
-```
+
 
 ### 3. Truy cập website
 - Mở trình duyệt và vào: `https://localhost:5001` hoặc `http://localhost:5000`
